@@ -21,7 +21,8 @@ RUN apt-get update -q --fix-missing && \
     ros-melodic-uvc-camera ros-melodic-image-view ros-melodic-usb-cam python-catkin-tools \
     python-rosdep python-rosinstall python-rosinstall-generator python-wstool
 
-RUN git config --global http.proxy http://proxy.x.x:x
+RUN git config --global http.proxy http://ip:port
+RUN git config --global https.proxy http://ip:port
 RUN git config --global http.postBuffer 20000000
 
 ENV EIGEN3_VERSION="3.1.0"
@@ -40,6 +41,7 @@ RUN git clone https://github.com/stevenlovegrove/Pangolin.git && \
           -DCMAKE_INSTALL_PREFIX=/usr/local .. && \
     cmake --build . && make install
 
+RUN echo "proxy = http://ip:port" > ~/.curlrc
 ENV OPENCV_VERSION="3.2.0"
 RUN git clone https://github.com/opencv/opencv.git && \
     cd opencv && git checkout tags/${OPENCV_VERSION} && \
